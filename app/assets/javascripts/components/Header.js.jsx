@@ -20,7 +20,7 @@ var Header = React.createClass({
     if (e.keyCode === ENTER_KEYCODE) {
       const value = this.state.value.trim()
       if (value !== '') {
-		    this.props.newTodo({uuid: 1, done: false, value: value})
+		    this.props.newTodo({content: value})
 		    this.setState({ value: '' })
       }
     }

@@ -2,7 +2,7 @@
 var App = React.createClass({
   getInitialState: function() {
     return {
-      todos: [],
+      todos: this.props.todos,
       count: 0,
       leftCount: 0
     }
@@ -13,7 +13,7 @@ var App = React.createClass({
       <List
         className='main'
         allDone={this.allDone()}
-        todos={this.props.todos}
+        todos={this.state.todos}
         toggle={this.handleToggle}
         destroy={this.handleDestroy}
         update={this.handleUpdate}
@@ -23,12 +23,17 @@ var App = React.createClass({
     </div>
   },
   addTodo: function(todo) {
-    let todos = this.state.todos
-    todos.push(todo)
-    this.setState({
-      todos: todos,
-      count: this.state.count + 1,
-      leftCount: this.state.leftCount + 1
+    $.ajax({
+      method: 'POST',
+      url: 'todos',
+      data: {todo: {content: todo.content} },
+      success: function(todo) {
+        var todos = this.state.todos
+        todos.push(todo.todo)
+        this.setState({
+          todos
+        })
+      }.bind(this)
     })
   },
   handleToggle: function(id, done) {
