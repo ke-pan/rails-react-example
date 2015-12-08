@@ -13,7 +13,7 @@ var App = React.createClass({
       <List
         className='main'
         allDone={this.allDone()}
-        todos={this.state.todos}
+        todos={this.props.todos}
         toggle={this.handleToggle}
         destroy={this.handleDestroy}
         update={this.handleUpdate}

@@ -15,7 +15,7 @@ var List = React.createClass({
   getListItems: function() {
     return this.props.todos.map(todo => {
       return <ListItem
-              key={todo.uuid}
+              key={todo.id}
               todoItem={todo}
               toggle={this.props.toggle}
               destroy={this.props.destroy}
