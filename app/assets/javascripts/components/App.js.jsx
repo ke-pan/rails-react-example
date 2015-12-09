@@ -37,12 +37,19 @@ var App = React.createClass({
     })
   },
   handleToggle: function(id, done) {
-    const index = this.findIndex(id)
-    let todos = this.state.todos
-    todos[index].done = done
-    this.setState({
-      todos: todos,
-      leftCount: this.state.leftCount + (done ? -1 : 1)
+    $.ajax({
+      method: 'PUT',
+      url: 'todos/' + id,
+      data: {todo: {completed: done}},
+      success: function(data) {
+        const index = this.findIndex(data.todo.id)
+        let todos = this.state.todos
+        todos[index].completed = data.todo.completed
+        this.setState({
+          todos: todos,
+          leftCount: this.state.leftCount + (data.todo.completed ? -1 : 1)
+        })
+      }.bind(this)
     })
   },
   handleToggleAll: function() {
@@ -71,7 +78,7 @@ var App = React.createClass({
     this.setState({ todos: todos })
   },
   findIndex: function(id) {
-    return this.state.todos.findIndex( e => e.uuid === id )
+    return this.state.todos.findIndex( e => e.id === id )
   },
   allDone: function() {
     return this.state.count !== 0 && this.state.leftCount === 0
