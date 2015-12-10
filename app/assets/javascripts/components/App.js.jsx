@@ -3,8 +3,8 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       todos: this.props.todos,
-      count: 0,
-      leftCount: 0
+      count: this.props.todos.length,
+      leftCount: this.props.leftCount
     }
   },
   render: function() {
@@ -31,7 +31,9 @@ var App = React.createClass({
         var todos = this.state.todos
         todos.push(todo.todo)
         this.setState({
-          todos
+          todos,
+          count: this.state.count + 1,
+          leftCount: this.state.leftCount + 1
         })
       }.bind(this)
     })
